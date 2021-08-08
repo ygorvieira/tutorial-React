@@ -2,45 +2,24 @@ import React, {Component} from "react";
 
 class Contador extends Component{
     state = { contador: 0, 
-        itens: ['item1', 'item2', 'item3']
+        itens: []
     };
 
-    estilos = {
-        fontSize: 25,
-        fontWeight: "normal"
-  };
+    renderItens(){
+        if(this.state.itens.length === 0) return <p>Não existem itens a ser exibidos</p>;
 
-    render() {    
-        
-        return (
-        <React.Fragment>
-            <span style={this.estilos} className={this.GetBadgeClasses()}>
-            {this.formataContador()}
-            </span>
-            <button onClick={this.tratarIncremento} className="btn btn-secondary">
-            Incrementar
-            </button>
-            <ul>
-                {this.state.itens.map(item => <li key = {item}>{item}</li>)}
+        return <ul>
+                { this.state.itens.map(item => <li key={item}>{item}</li>)}
             </ul>
-        </React.Fragment>
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                {this.state.itens.length === 0 && 'Inclua um item...'}
+                {this.renderItens()}
+            </React.Fragment>
         );
     }
-
-    formataContador() {
-        const { contador } = this.state;
-        return contador === 0 ? "Zero" : contador;
-    }
-
-    tratarIncremento = () => {
-        this.setState({ contador: this.state.contador + 1 });
-    };
-
-    GetBadgeClasses(){
-        let classes = "badge m-2 badge-";
-        classes += (this.state.contador > 10 ? "success" : "primary");
-        return classes;
-    }
 }
-
 export default Contador;
